@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
     version="3.1">
-    <display-name>VoKta - User Portal</display-name>
+    <display-name>Vokta User</display-name>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>ApplicationFilter</filter-name>
-        <filter-class>id.ic.up.filter.ApplicationFilter</filter-class>
+        <filter-class>id.ic.vokta.filter.ApplicationFilter</filter-class>
     </filter>
 
     <filter-mapping>
