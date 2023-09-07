@@ -10,6 +10,7 @@ public class OtpResponse extends BaseOtpResponse {
     private OtpResult result;
 
     public OtpResponse() {
+        //Empty constructor
     }
 
     public OtpResult getResult() {

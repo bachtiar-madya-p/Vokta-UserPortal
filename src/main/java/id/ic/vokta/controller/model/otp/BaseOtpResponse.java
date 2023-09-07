@@ -13,6 +13,7 @@ public class BaseOtpResponse {
     private String message;
 
     public BaseOtpResponse() {
+        //Empty constructor
     }
 
     public int getCode() {

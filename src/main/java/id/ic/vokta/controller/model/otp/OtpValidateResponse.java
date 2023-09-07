@@ -10,6 +10,7 @@ public class OtpValidateResponse extends BaseOtpResponse {
     private OtpValidateResult result;
 
     public OtpValidateResponse() {
+        //Empty constructor
     }
 
     public OtpValidateResult getResult() {

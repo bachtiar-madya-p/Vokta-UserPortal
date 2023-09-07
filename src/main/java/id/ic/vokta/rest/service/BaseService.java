@@ -1,27 +1,24 @@
 package id.ic.vokta.rest.service;
 
-import java.io.*;
+import id.ic.vokta.controller.AuditController;
+import id.ic.vokta.manager.PropertyManager;
+import id.ic.vokta.rest.model.ServiceResponse;
+import id.ic.vokta.util.log.AppLogger;
+import id.ic.vokta.util.property.Constant;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.Context;
-import java.time.LocalDateTime;
-import javax.ws.rs.core.NewCookie;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import id.ic.vokta.util.log.AppLogger;
-import id.ic.vokta.util.property.AuditConstant;
-import id.ic.vokta.util.property.Constant;
-import id.ic.vokta.util.property.Property;
-import id.ic.vokta.controller.AuditController;
-import id.ic.vokta.manager.PropertyManager;
-import id.ic.vokta.rest.model.ServiceResponse;
 
 public class BaseService {
 

@@ -19,7 +19,6 @@ import id.ic.vokta.util.property.Property;
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

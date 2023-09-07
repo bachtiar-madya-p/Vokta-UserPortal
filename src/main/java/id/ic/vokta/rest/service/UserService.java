@@ -2,15 +2,15 @@ package id.ic.vokta.rest.service;
 
 
 import id.ic.vokta.controller.UserController;
-import id.ic.vokta.rest.model.UserRequest;
 import id.ic.vokta.rest.validator.UserValidator;
-import id.ic.vokta.util.json.JsonHelper;
-import id.ic.vokta.util.property.Constant;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 

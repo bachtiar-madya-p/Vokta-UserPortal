@@ -36,9 +36,6 @@
 
 		<profile>
 			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<build>
 				<resources>
 
@@ -54,6 +51,9 @@
 
 		<profile>
 			<id>lab</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
 				<resources>
 					<resource>

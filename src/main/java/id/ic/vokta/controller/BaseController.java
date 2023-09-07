@@ -7,12 +7,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Update;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
-
 public class BaseController {
-
-    protected Jdbi jdbi;
 
     protected AppLogger log;
 
@@ -44,7 +39,7 @@ public class BaseController {
         return PropertyManager.getInstance().getBooleanProperty(key);
     }
 
-    protected Handle getHandle() throws SQLException {
+    protected Handle getHandle(){
         return Jdbi.open(ConnectionManager.getInstance().getDataSource());
     }
 
