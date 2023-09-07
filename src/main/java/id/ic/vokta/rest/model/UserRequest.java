@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserRequest {
 
-    @JsonProperty("fullname")
-    private String fullname;
-
     @JsonProperty("firstname")
     private String firstname;
 
@@ -27,14 +24,6 @@ public class UserRequest {
 
     public UserRequest() {
         //Empty constructor
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
     }
 
     public String getFirstname() {
