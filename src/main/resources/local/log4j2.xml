@@ -11,8 +11,8 @@
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN}" />
         </Console>
-        <RollingFile name="rollingFile" fileName="${LOG_DIR}/mh360-signup.log"
-            filePattern="${LOG_DIR}/mh360-signup.%d{dd-MMM}.log.gz" ignoreExceptions="false">
+        <RollingFile name="rollingFile" fileName="${LOG_DIR}/vokta-user.log"
+            filePattern="${LOG_DIR}/vokta-user.%d{dd-MMM}.log.gz" ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>${PATTERN}</Pattern>
             </PatternLayout>

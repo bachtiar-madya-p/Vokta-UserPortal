@@ -11,7 +11,9 @@
     </rule>
 
     <rule>
-        <from>^/index</from>
-        <to>/WEB-INF/index.jsp</to>
+        <from>^/signUps$</from>
+        <to>signUps.jsp</to>
     </rule>
+
+
 </urlrewrite>

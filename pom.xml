@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ic.id</groupId>
-	<artifactId>vokta-users</artifactId>
+	<artifactId>vokta-user</artifactId>
 	<version>0.1</version>
 	<packaging>war</packaging>
-	<name>vokta-users</name>
+	<name>vokta-user</name>
 	<description>VoKta - User Portal</description>
 	<build>
-		<finalName>vokta-users</finalName>
+		<finalName>vokta-user</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -170,6 +170,13 @@
 			<groupId>com.github.kagkarlsson</groupId>
 			<artifactId>db-scheduler</artifactId>
 			<version>${scheduler.version}</version>
+		</dependency>
+
+		<!-- READ XLSX -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
 		</dependency>
 
 	</dependencies>
