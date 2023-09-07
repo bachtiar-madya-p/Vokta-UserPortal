@@ -1,57 +1,58 @@
 package id.ic.vokta.controller;
 
+import id.ic.vokta.model.User;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.statement.Query;
+import org.jdbi.v3.core.statement.Update;
+
 @Controller
 public class UserController extends BaseController {
 
     public UserController() {
         log = getLogger(this.getClass());
     }
-/*
-    public boolean create(User user) {
-        final String methodName = "create";
-        boolean result = false;
+
+    public boolean validateEmail(String email) {
+        final String methodName = "validateEmail";
         start(methodName);
 
-        CreateUserRequest request = new CreateUserRequest(user);
+        boolean result = false;
 
-        String encryptedRequest = encryptRequest(request);
+        String sql = "SELECT if(COUNT(email)>0,'true','false') AS result " +
+                "FROM users WHERE email = :email;";
 
-        logRequest(methodName, request);
+        try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
+            q.bind("email", email);
+            result = q.mapTo(Boolean.class).one();
 
-        HTTPRequest httpRequest = buildAPIRequest(getProperty(Property.API_USERS_CREATE_URL));
-        log.debug(methodName, "URL : " + httpRequest.getUrl());
-
-        HTTPResponse httpResponse = HTTPClient.post(httpRequest, encryptedRequest);
-
-        CreateUserResponse response = decryptResponse(httpResponse, CreateUserResponse.class);
-
-        logResponse(methodName, response);
-
-        result = isSuccessResponse(httpResponse);
-
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+            if (ex.getMessage().contains("Expected one element, but found none")) {
+                log.debug(methodName, "Email not found!");
+            }
+        }
         completed(methodName);
         return result;
     }
 
-    public boolean validateEmail(String email) {
-        final String methodName = "validateEmail";
-        boolean result = false;
+    public boolean createUser(User user) {
+        final String methodName = "createUser";
         start(methodName);
 
-        ValidateEmailRequest request = new ValidateEmailRequest(new USSUser("uid", email));
+        boolean result = false;
 
-        logRequest(methodName, request);
+        String sql = "INSERT INTO `users` (`uid`, `fullname`, `firstname`, `lastname`, `email`, `mobileNo`, `address`) " +
+                "VALUES (:uid, :fullname, :firstname, :lastname, :email, :mobileNo, :address);";
 
-        HTTPRequest httpRequest = buildAPIRequest(getProperty(Property.API_EMAIL_VALIDATE_URL));
+        try (Handle h = getHandle(); Update update = h.createUpdate(sql)) {
+            update.bindBean(user);
+            result = executeUpdate(update);
+            log.debug(methodName, "Result: " + result);
 
-        HTTPResponse httpResponse = HTTPClient.post(httpRequest, toJson(request));
-
-        logResponse(methodName, httpResponse);
-
-        result = isSuccessResponse(httpResponse);
-
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+        }
         completed(methodName);
         return result;
-
-    }*/
+    }
 }
