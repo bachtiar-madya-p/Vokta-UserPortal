@@ -17,9 +17,8 @@ public class RegisterValidator extends BaseValidator{
 
     public boolean validate(UserRequest request) {
         return notNull(request)
-                && validate(request.getFullname())
                 && validate(request.getFirstname())
-                && validate(request.getLastname())
+                && request.getLastname()!= null || !request.getLastname().isEmpty()
                 && validate(request.getEmail())
                 && validate(request.getMobileNo())
                 && validate(request.getAddress())

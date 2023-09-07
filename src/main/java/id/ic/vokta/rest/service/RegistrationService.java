@@ -91,8 +91,14 @@ public class RegistrationService extends BaseService {
             log.debug(methodName, "Email exist: " + emailExist);
             if (!emailExist) {
 
+                String fullname = "";
+                if (request.getLastname().equals("")) {
+                    fullname = request.getFirstname();
+                } else {
+                    fullname = request.getFirstname() + " " + request.getLastname();
+                }
                 User user = new User();
-                user.setFullname(request.getFullname());
+                user.setFullname(fullname);
                 user.setFirstname(request.getFirstname());
                 user.setLastname(request.getLastname());
                 user.setEmail(request.getEmail());
