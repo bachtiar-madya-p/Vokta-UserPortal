@@ -40,6 +40,7 @@ public class RegistrationService extends BaseService {
 
     @Inject
     private UserController userController;
+
     @Inject
     private AuthenticationController authenticationController;
 
@@ -56,7 +57,7 @@ public class RegistrationService extends BaseService {
     public Response validateEmail(EmailRequest request) {
         final String methodName = "validateEmail";
         start(methodName);
-        log.debug(methodName, "GET /register/email/validate");
+        log.debug(methodName, "POST /register/email/validate");
         log.debug(methodName, JsonHelper.toJson(request));
         Response response = buildBadRequestResponse(Constant.ERROR_INVALID_PAYLOAD);
 
@@ -81,7 +82,7 @@ public class RegistrationService extends BaseService {
     public Response store(UserRequest request) {
         final String methodName = "store";
         start(methodName);
-        log.debug(methodName, "GET /register/store");
+        log.debug(methodName, "POST /register/store");
         log.debug(methodName, JsonHelper.toJson(request));
         Response response = buildBadRequestResponse(Constant.ERROR_INVALID_PAYLOAD);
         boolean validPayload = validator.validate(request);
@@ -138,7 +139,7 @@ public class RegistrationService extends BaseService {
     public Response resendOtp() {
         final String methodName = "resendOtp";
         start(methodName);
-        log.debug(methodName, "GET /register/otp/resend");
+        log.debug(methodName, "POST /register/otp/resend");
         boolean sessionUser = hasSessionAttribute(Constant.SESSION_USER_DETAILS);
         Response response = buildBadRequestResponse();
         if (sessionUser) {
@@ -174,7 +175,7 @@ public class RegistrationService extends BaseService {
     public Response verifyRegistration(RegisterVerifyRequest request) {
         final String methodName = "verifyRegistration";
         start(methodName);
-        log.debug(methodName, "GET /register/verify");
+        log.debug(methodName, "POST /register/verify");
         log.debug(methodName, JsonHelper.toJson(request));
         Response response = buildBadRequestResponse(Constant.ERROR_INVALID_PAYLOAD);
         boolean validPayload = validator.validate(request);

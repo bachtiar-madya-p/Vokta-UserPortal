@@ -2,6 +2,7 @@ package id.ic.vokta.controller;
 
 import id.ic.vokta.model.User;
 import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.statement.Query;
 import org.jdbi.v3.core.statement.Update;
 
 @Controller
@@ -27,6 +28,53 @@ public class AuthenticationController extends BaseController{
 
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
+        }
+        completed(methodName);
+        return result;
+    }
+
+    public String getUserSalt(String userId) {
+        final String methodName = "getUserSalt";
+        start(methodName);
+
+        String result = "";
+
+        String sql = "SELECT salt  " +
+                "FROM authentications WHERE uid = :userId;";
+
+        try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
+            q.bind("userId", userId);
+            result = q.mapTo(String.class).one();
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+            if (ex.getMessage().contains("Expected one element, but found none")) {
+                log.debug(methodName, "Email not found!");
+            }
+        }
+        completed(methodName);
+        return result;
+    }
+
+    public boolean authenticate(String userId, String hashedPassword) {
+        final String methodName = "authenticate";
+        start(methodName);
+
+        boolean result = false;
+
+        String sql = "SELECT if(COUNT(uid)>0,'true','false') AS result " +
+                "FROM authentications WHERE uid = :uid AND password = :password;";
+
+        try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
+            q.bind("uid", userId);
+            q.bind("password", hashedPassword);
+            result = q.mapTo(Boolean.class).one();
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+            if (ex.getMessage().contains("Expected one element, but found none")) {
+                log.debug(methodName, "Email not found!");
+            }
         }
         completed(methodName);
         return result;

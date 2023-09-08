@@ -16,4 +16,5 @@ public class Constant {
 
     //Error constants
     public static final String ERROR_INVALID_PAYLOAD = "Invalid payload";
+    public static final String ERROR_USER_NOT_FOUND = "User not found";
 }

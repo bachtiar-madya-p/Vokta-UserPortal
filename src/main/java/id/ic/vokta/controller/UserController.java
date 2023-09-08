@@ -55,4 +55,27 @@ public class UserController extends BaseController {
         completed(methodName);
         return result;
     }
+
+    public String getUserUid(String email) {
+        final String methodName = "getUserUid";
+        start(methodName);
+
+        String result = "";
+
+        String sql = "SELECT uid  " +
+                "FROM users WHERE email = :email;";
+
+        try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
+            q.bind("email", email);
+            result = q.mapTo(String.class).one();
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+            if (ex.getMessage().contains("Expected one element, but found none")) {
+                log.debug(methodName, "Email not found!");
+            }
+        }
+        completed(methodName);
+        return result;
+    }
 }
