@@ -1,9 +1,9 @@
 package id.ic.vokta.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDateTime;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @JsonProperty("uid")
@@ -31,10 +31,10 @@ public class User {
     private boolean status;
 
     @JsonProperty("createDt")
-    private LocalDateTime createDt;
+    private String createDt;
 
     @JsonProperty("modifyDt")
-    private LocalDateTime modifyDt;
+    private String modifyDt;
 
     @JsonProperty("password")
     private String password;
@@ -110,19 +110,19 @@ public class User {
         this.status = status;
     }
 
-    public LocalDateTime getCreateDt() {
+    public String getCreateDt() {
         return createDt;
     }
 
-    public void setCreateDt(LocalDateTime createDt) {
+    public void setCreateDt(String createDt) {
         this.createDt = createDt;
     }
 
-    public LocalDateTime getModifyDt() {
+    public String getModifyDt() {
         return modifyDt;
     }
 
-    public void setModifyDt(LocalDateTime modifyDt) {
+    public void setModifyDt(String modifyDt) {
         this.modifyDt = modifyDt;
     }
 

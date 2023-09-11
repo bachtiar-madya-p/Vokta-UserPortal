@@ -4,6 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import id.ic.vokta.manager.ScheduleManager;
 import id.ic.vokta.util.log.AppLogger;
 import id.ic.vokta.manager.ConnectionManager;
 import id.ic.vokta.manager.EncryptionManager;
@@ -24,6 +25,7 @@ public class ContextListener implements ServletContextListener {
         PropertyManager.getInstance();
         EncryptionManager.getInstance();
         ConnectionManager.getInstance();
+        ScheduleManager.getInstance();
         log.info("Application Init Completed");
     }
 
