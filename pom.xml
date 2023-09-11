@@ -161,15 +161,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
-			<version>${bouncycastle.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.kagkarlsson</groupId>
-			<artifactId>db-scheduler</artifactId>
-			<version>${scheduler.version}</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.2</version>
 		</dependency>
 
 		<!-- READ XLSX -->
@@ -216,8 +210,6 @@
 		<jdbi.version>3.18.0</jdbi.version>
 		<hikaricp.version>3.4.5</hikaricp.version>
 		<mariadb.version>2.7.2</mariadb.version>
-		<bouncycastle.version>1.68</bouncycastle.version>
-		<scheduler.version>9.3</scheduler.version>
 		<poi.version>5.2.0</poi.version>
 
 		<!-- Java Version -->

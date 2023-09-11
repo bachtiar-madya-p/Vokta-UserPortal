@@ -1,16 +1,22 @@
 package id.ic.vokta.util.helper;
 
+import id.ic.vokta.manager.PropertyManager;
 import id.ic.vokta.util.json.JsonHelper;
 import id.ic.vokta.util.log.BaseLogger;
-import io.jsonwebtoken.*;
+import id.ic.vokta.util.property.Property;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JWTHelper {
 
@@ -20,18 +26,19 @@ public class JWTHelper {
     private static Key HMAC_KEY = new SecretKeySpec(Base64.getDecoder().decode(SECRET_KEY),
             SignatureAlgorithm.HS256.getJcaName());
 
-    public static String createJWT(String uid, String name, String email, String subject) {
+    private static Set<String> blacklistedTokens = ConcurrentHashMap.newKeySet();
+
+    public static String createJWT(String uid) {
 
         Instant now = Instant.now();
+        long expireMin = PropertyManager.getInstance().getLongProperty(Property.JWT_AUTH_EXPIRE_INTERVAL);
         //Builds the JWT and serializes it to a compact, URL-safe string
         return Jwts.builder()
-                .claim("name", name)
-                .claim("email", email)
                 .claim("role", new String[]{"user"})
-                .setSubject(subject)
+                .setSubject("user_auth")
                 .setId(uid)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(3l, ChronoUnit.MINUTES)))
+                .setExpiration(Date.from(now.plus(expireMin, ChronoUnit.MINUTES)))
                 .signWith(HMAC_KEY)
                 .compact();
     }
@@ -52,12 +59,28 @@ public class JWTHelper {
                     .setSigningKey(HMAC_KEY)
                     .build()
                     .parseClaimsJws(jwtString);
-
-            result = true;
+            if (!isTokenBlacklisted(jwtString)) {
+                result = true;
+            }
         } catch (Exception e) {
-            //log.error("validateJWT", e.getMessage());
-            System.out.println(e.getMessage());
+            log.error("validateJWT", e.getMessage());
         }
         return result;
+    }
+
+    public static void blacklistToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public static void purgeBlacklistToken() {
+        blacklistedTokens.clear();
+    }
+
+    public static boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
+    }
+
+    public static Set<String> getBlacklistedTokens() {
+        return blacklistedTokens;
     }
 }

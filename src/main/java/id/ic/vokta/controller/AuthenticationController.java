@@ -35,7 +35,7 @@ public class AuthenticationController extends BaseController{
 
     public String getUserSalt(String userId) {
         final String methodName = "getUserSalt";
-        start(methodName);
+        //start(methodName);
 
         String result = "";
 
@@ -52,14 +52,13 @@ public class AuthenticationController extends BaseController{
                 log.debug(methodName, "Email not found!");
             }
         }
-        completed(methodName);
+        //completed(methodName);
         return result;
     }
 
     public boolean authenticate(String userId, String hashedPassword) {
         final String methodName = "authenticate";
         start(methodName);
-
         boolean result = false;
 
         String sql = "SELECT if(COUNT(uid)>0,'true','false') AS result " +
@@ -69,7 +68,7 @@ public class AuthenticationController extends BaseController{
             q.bind("uid", userId);
             q.bind("password", hashedPassword);
             result = q.mapTo(Boolean.class).one();
-
+            log.debug(methodName, "Challenge authentication : " + (result? "Ok":"Unauthorized"));
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
             if (ex.getMessage().contains("Expected one element, but found none")) {

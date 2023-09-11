@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 
     public String getUserUid(String email) {
         final String methodName = "getUserUid";
-        start(methodName);
+        //start(methodName);
 
         String result = "";
 
@@ -74,6 +74,49 @@ public class UserController extends BaseController {
             if (ex.getMessage().contains("Expected one element, but found none")) {
                 log.debug(methodName, "Email not found!");
             }
+        }
+        //completed(methodName);
+        return result;
+    }
+
+    public User getUserInformation(String userid) {
+        final String methodName = "getUserInformation";
+        start(methodName);
+
+        User user = new User();
+
+        String sql = "SELECT uid, fullname, firstname, lastname, email, mobileNo, address, createDt, modifyDt  " +
+                "FROM users WHERE uid = :uid;";
+
+        try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
+            q.bind("uid", userid);
+            user = q.mapToBean(User.class).one();
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+            if (ex.getMessage().contains("Expected one element, but found none")) {
+                log.debug(methodName, "Email not found!");
+            }
+        }
+        completed(methodName);
+        return user;
+    }
+
+    public boolean updateUser(User user) {
+        final String methodName = "updateUser";
+        start(methodName);
+
+        boolean result = false;
+
+        String sql = "UPDATE users SET fullname=:fullname, firstname=:firstname, lastname=:lastname, mobileNo=:mobileNo, address=:address WHERE uid=:uid;";
+
+        try (Handle h = getHandle(); Update update = h.createUpdate(sql)) {
+            update.bindBean(user);
+            result = executeUpdate(update);
+            log.debug(methodName, "Result: " + result);
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
         }
         completed(methodName);
         return result;

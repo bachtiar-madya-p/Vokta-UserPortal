@@ -31,4 +31,7 @@ public class Property {
     public static final String OTP_KEY_VALUE        = "otp.ms.api-key.value";
     public static final String OTP_RESEND_INTERVAL  = "otp.resend.interval";
 
+    // JWT
+    public static final String JWT_AUTH_EXPIRE_INTERVAL = "auth.expire.interval";
+
 }
