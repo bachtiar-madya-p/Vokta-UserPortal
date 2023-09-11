@@ -13,13 +13,18 @@ import id.ic.vokta.util.helper.JWTHelper;
 import id.ic.vokta.util.json.JsonHelper;
 import id.ic.vokta.util.property.Constant;
 import id.ic.vokta.util.property.Property;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Path("auth")
 @Singleton
