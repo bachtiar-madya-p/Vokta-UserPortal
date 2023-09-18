@@ -5,10 +5,7 @@ import id.ic.vokta.controller.UserController;
 import id.ic.vokta.model.User;
 import id.ic.vokta.rest.model.UserUpdateRequest;
 import id.ic.vokta.rest.validator.UserValidator;
-import id.ic.vokta.util.helper.JWTHelper;
 import id.ic.vokta.util.json.JsonHelper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -38,16 +35,12 @@ public class UserService extends BaseService {
         start(methodName);
         log.debug(methodName, "GET /users");
         Response response = buildBadRequestResponse();
-        String token = extractToken(authorizationHeader);
-        if (token != null) {
-            Jws<Claims> jwsClaims = JWTHelper.decodeJWT(token);
-            Claims claims = jwsClaims.getBody();
+        String userId = extractUid(authorizationHeader);
 
-            String userId = claims.getId();
-            User user = userController.getUserInformation(userId);
+        User user = userController.getUserInformation(userId);
 
-            response = buildSuccessResponse(user);
-        }
+        response = buildSuccessResponse(user);
+
         completed(methodName);
         return response;
     }
@@ -63,32 +56,29 @@ public class UserService extends BaseService {
         boolean validPayload = validator.validate(request);
         log.debug(methodName, "Validate payload : " + validPayload);
         if (validPayload) {
-            String token = extractToken(authorizationHeader);
-            if (token != null) {
-                Jws<Claims> jwsClaims = JWTHelper.decodeJWT(token);
-                Claims claims = jwsClaims.getBody();
-                String userId = claims.getId();
+            String userId = extractUid(authorizationHeader);
 
-                String fullname = "";
-                if (request.getLastname().equals("")) {
-                    fullname = request.getFirstname();
-                } else {
-                    fullname = request.getFirstname() + " " + request.getLastname();
-                }
-                User user = new User();
-                user.setUid(userId);
-                user.setFullname(fullname);
-                user.setFirstname(request.getFirstname());
-                user.setLastname(request.getLastname());
-                user.setEmail(request.getEmail());
-                user.setMobileNo(request.getMobileNo());
-                user.setAddress(request.getAddress());
 
-                boolean update = userController.updateUser(user);
-                if (update) {
-                    response = buildSuccessResponse(user);
-                }
+            String fullname = "";
+            if (request.getLastname().equals("")) {
+                fullname = request.getFirstname();
+            } else {
+                fullname = request.getFirstname() + " " + request.getLastname();
             }
+            User user = new User();
+            user.setUid(userId);
+            user.setFullname(fullname);
+            user.setFirstname(request.getFirstname());
+            user.setLastname(request.getLastname());
+            user.setEmail(request.getEmail());
+            user.setMobileNo(request.getMobileNo());
+            user.setAddress(request.getAddress());
+
+            boolean update = userController.updateUser(user);
+            if (update) {
+                response = buildSuccessResponse(user);
+            }
+
         }
         completed(methodName);
         return response;

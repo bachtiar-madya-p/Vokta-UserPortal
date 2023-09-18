@@ -37,6 +37,7 @@ public class ApplicationFilter implements Filter {
         unprotectedList.add("/rest/register/verify");
         unprotectedList.add("/rest/onboard/register-status");
         unprotectedList.add("/rest/onboard/register-complete");
+        unprotectedList.add("/rest/onboard/environment");
 
         unprotectedList.add("/rest/onboard/login-start");
         unprotectedList.add("/rest/auth");

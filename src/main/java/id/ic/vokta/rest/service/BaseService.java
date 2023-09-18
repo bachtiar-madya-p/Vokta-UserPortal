@@ -3,8 +3,11 @@ package id.ic.vokta.rest.service;
 import id.ic.vokta.controller.AuditController;
 import id.ic.vokta.manager.PropertyManager;
 import id.ic.vokta.rest.model.ServiceResponse;
+import id.ic.vokta.util.helper.JWTHelper;
 import id.ic.vokta.util.log.AppLogger;
 import id.ic.vokta.util.property.Constant;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -186,6 +189,16 @@ public class BaseService {
             return authorizationHeader.substring(7); // Remove "Bearer " prefix
         }
         return null;
+    }
+
+    protected String extractUid (String bearerToken)
+    {
+        String token = extractToken(bearerToken);
+        Jws<Claims> jwsClaims = JWTHelper.decodeJWT(token);
+        Claims claims = jwsClaims.getBody();
+
+        String userId = claims.getId();
+        return userId;
     }
 
 }
