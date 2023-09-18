@@ -10,6 +10,8 @@ import id.ic.vokta.manager.ConnectionManager;
 import id.ic.vokta.manager.EncryptionManager;
 import id.ic.vokta.manager.PropertyManager;
 
+import java.util.TimeZone;
+
 @WebListener
 public class ContextListener implements ServletContextListener {
 
@@ -21,6 +23,10 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent evt) {
+
+        // Set the desired timezone
+        TimeZone timeZone = TimeZone.getTimeZone("Asia/Jakarta");
+
         log.info("Application Init Started");
         PropertyManager.getInstance();
         EncryptionManager.getInstance();

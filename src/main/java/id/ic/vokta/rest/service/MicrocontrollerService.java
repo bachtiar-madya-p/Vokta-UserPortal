@@ -9,9 +9,6 @@ import id.ic.vokta.model.MicrocontrollerEvent;
 import id.ic.vokta.rest.model.MicrocontrollerDetailResponse;
 import id.ic.vokta.rest.model.MicrocontrollerEventsResponse;
 import id.ic.vokta.rest.model.MicrocontrollerResponse;
-import id.ic.vokta.util.helper.JWTHelper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -47,26 +44,22 @@ public class MicrocontrollerService extends BaseService {
         log.debug(methodName, "GET /microcontrollers");
 
         Response response = buildSuccessResponse();
-        String token = extractToken(authorizationHeader);
-        if (token != null) {
-            Jws<Claims> jwsClaims = JWTHelper.decodeJWT(token);
-            Claims claims = jwsClaims.getBody();
-            String userId = claims.getId();
+        String userId = extractUid(authorizationHeader);
 
-            List<MicrocontrollerSchema> schemaList = schemaController.getMicrocontrollerSchema(userId);
+        List<MicrocontrollerSchema> schemaList = schemaController.getMicrocontrollerSchema(userId);
 
-            MicrocontrollerResponse microcontrollerResponse = new MicrocontrollerResponse();
-            if (!schemaList.isEmpty()) {
-                List<Microcontroller> microcontrollers = new ArrayList<>();
-                for (MicrocontrollerSchema schema : schemaList) {
-                    Microcontroller microcontroller = microcontrollerController.getMinimalMicrocontrollerInformation(schema.getMicrocontrollerId());
-                    microcontrollers.add(microcontroller);
-                }
-                microcontrollerResponse.setMicrocontrollers(microcontrollers);
+        MicrocontrollerResponse microcontrollerResponse = new MicrocontrollerResponse();
+        if (!schemaList.isEmpty()) {
+            List<Microcontroller> microcontrollers = new ArrayList<>();
+            for (MicrocontrollerSchema schema : schemaList) {
+                Microcontroller microcontroller = microcontrollerController.getMinimalMicrocontrollerInformation(schema.getMicrocontrollerId());
+                microcontrollers.add(microcontroller);
             }
-
-            response = buildSuccessResponse(microcontrollerResponse);
+            microcontrollerResponse.setMicrocontrollers(microcontrollers);
         }
+
+        response = buildSuccessResponse(microcontrollerResponse);
+
         completed(methodName);
         return response;
     }
@@ -79,17 +72,18 @@ public class MicrocontrollerService extends BaseService {
         log.debug(methodName, "GET /microcontrollers/" + uid);
 
         Response response = buildSuccessResponse();
-        String token = extractToken(authorizationHeader);
-        if (token != null) {
-            MicrocontrollerDetailResponse detailResponse = new MicrocontrollerDetailResponse();
-            Microcontroller microcontroller = microcontrollerController.getMicrocontrollerInformation(uid);
-            detailResponse.setMicrocontroller(microcontroller);
+        String userId = extractUid(authorizationHeader);
 
-            response = buildSuccessResponse(detailResponse);
-        }
+        MicrocontrollerDetailResponse detailResponse = new MicrocontrollerDetailResponse();
+        Microcontroller microcontroller = microcontrollerController.getMicrocontrollerInformation(uid);
+        detailResponse.setMicrocontroller(microcontroller);
+
+        response = buildSuccessResponse(detailResponse);
+
         completed(methodName);
         return response;
     }
+
     @GET
     @Path("events/{uid}")
     public Response getMicrocontrollerEventDetails(@HeaderParam("Authorization") String authorizationHeader, @PathParam("uid") String uid) {
@@ -98,31 +92,31 @@ public class MicrocontrollerService extends BaseService {
         log.debug(methodName, "GET /microcontrollers/events/" + uid);
 
         Response response = buildSuccessResponse();
-        String token = extractToken(authorizationHeader);
-        if (token != null) {
-            Microcontroller microcontroller = microcontrollerController.getMinimalMicrocontrollerInformation(uid);
-            MicrocontrollerEvent currentEvent = eventController.getCurrentStatus(microcontroller.getDeviceId());
+        String userId = extractUid(authorizationHeader);
 
-            MicrocontrollerEvent currentEventResponse = new MicrocontrollerEvent();
-            currentEventResponse.setLatitude(currentEvent.getLatitude());
-            currentEventResponse.setLongitude(currentEvent.getLongitude());
-            currentEventResponse.setPh(currentEvent.getPh());
-            currentEventResponse.setTurbidity(currentEvent.getTurbidity());
-            currentEventResponse.setTds(currentEvent.getTds());
+        Microcontroller microcontroller = microcontrollerController.getMinimalMicrocontrollerInformation(uid);
+        MicrocontrollerEvent currentEvent = eventController.getCurrentStatus(microcontroller.getDeviceId());
 
-            Double maxCapacity = Double.parseDouble(microcontroller.getCapacity());
-            Double filledLevel = Double.parseDouble(currentEvent.getLevel())/100;
-            double currentCapacity = maxCapacity * filledLevel;
+        MicrocontrollerEvent currentEventResponse = new MicrocontrollerEvent();
+        currentEventResponse.setLatitude(currentEvent.getLatitude());
+        currentEventResponse.setLongitude(currentEvent.getLongitude());
+        currentEventResponse.setPh(currentEvent.getPh());
+        currentEventResponse.setTurbidity(currentEvent.getTurbidity());
+        currentEventResponse.setTds(currentEvent.getTds());
 
-            currentEvent.setLevel(String.valueOf(currentCapacity));
+        Double maxCapacity = Double.parseDouble(microcontroller.getCapacity());
+        Double filledLevel = Double.parseDouble(currentEvent.getLevel()) / 100;
+        double currentCapacity = maxCapacity * filledLevel;
 
-            MicrocontrollerEventsResponse eventsResponse = new MicrocontrollerEventsResponse();
-            eventsResponse.setUid(microcontroller.getUid());
-            eventsResponse.setDeviceId(microcontroller.getDeviceId());
-            eventsResponse.setDeviceName(microcontroller.getDeviceName());
-            eventsResponse.setEvent(currentEvent);
-            response = buildSuccessResponse(eventsResponse);
-        }
+        currentEvent.setLevel(String.valueOf(currentCapacity));
+
+        MicrocontrollerEventsResponse eventsResponse = new MicrocontrollerEventsResponse();
+        eventsResponse.setUid(microcontroller.getUid());
+        eventsResponse.setDeviceId(microcontroller.getDeviceId());
+        eventsResponse.setDeviceName(microcontroller.getDeviceName());
+        eventsResponse.setEvent(currentEvent);
+        response = buildSuccessResponse(eventsResponse);
+
         completed(methodName);
         return response;
     }

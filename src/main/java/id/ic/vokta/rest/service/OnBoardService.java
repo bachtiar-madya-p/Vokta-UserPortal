@@ -1,6 +1,8 @@
 package id.ic.vokta.rest.service;
 
 
+import id.ic.vokta.util.date.DateHelper;
+
 import javax.annotation.security.PermitAll;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
@@ -9,6 +11,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.TimeZone;
 
 @Path("onboard")
 @Singleton
@@ -107,6 +112,22 @@ public class OnBoardService extends BaseService {
         }
         completed(methodName);
         return buildSuccessResponse();
+
+    }
+
+    @GET
+    @Path("environment")
+    public Response environmentCheck() {
+        final String methodName = "environmentCheck";
+        start(methodName);
+        log.debug(methodName, "GET /onboard/environment");
+
+        HashMap<String, String> configMap = new HashMap<>();
+        configMap.put("TimeZone", TimeZone.getDefault().getID());
+        configMap.put("System Time", DateHelper.formatDateTime(LocalDateTime.now()));
+
+        completed(methodName);
+        return buildSuccessResponse(configMap);
 
     }
 
