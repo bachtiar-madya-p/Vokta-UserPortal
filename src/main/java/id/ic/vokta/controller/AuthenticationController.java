@@ -1,6 +1,7 @@
 package id.ic.vokta.controller;
 
 import id.ic.vokta.model.User;
+import id.ic.vokta.util.property.Constant;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.statement.Query;
 import org.jdbi.v3.core.statement.Update;
@@ -48,7 +49,7 @@ public class AuthenticationController extends BaseController{
 
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
-            if (ex.getMessage().contains("Expected one element, but found none")) {
+            if (ex.getMessage().contains(Constant.ERROR_EXPECTED_ONE_ELEMENT)) {
                 log.debug(methodName, "Email not found!");
             }
         }
@@ -71,7 +72,7 @@ public class AuthenticationController extends BaseController{
             log.debug(methodName, "Challenge authentication : " + (result? "Ok":"Unauthorized"));
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
-            if (ex.getMessage().contains("Expected one element, but found none")) {
+            if (ex.getMessage().contains(Constant.ERROR_EXPECTED_ONE_ELEMENT)) {
                 log.debug(methodName, "Email not found!");
             }
         }
