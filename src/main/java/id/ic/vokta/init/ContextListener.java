@@ -25,7 +25,7 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent evt) {
 
         // Set the desired timezone
-        TimeZone timeZone = TimeZone.getTimeZone("Asia/Jakarta");
+        TimeZone.getTimeZone("Asia/Jakarta");
 
         log.info("Application Init Started");
         PropertyManager.getInstance();

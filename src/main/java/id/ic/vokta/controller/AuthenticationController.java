@@ -36,7 +36,6 @@ public class AuthenticationController extends BaseController{
 
     public String getUserSalt(String userId) {
         final String methodName = "getUserSalt";
-        //start(methodName);
 
         String result = "";
 
@@ -53,7 +52,7 @@ public class AuthenticationController extends BaseController{
                 log.debug(methodName, "Email not found!");
             }
         }
-        //completed(methodName);
+
         return result;
     }
 

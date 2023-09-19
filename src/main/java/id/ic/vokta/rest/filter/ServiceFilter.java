@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
 
-import id.ic.vokta.util.property.Constant;
 import id.ic.vokta.rest.model.ServiceResponse;
 
 @Provider

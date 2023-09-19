@@ -197,8 +197,7 @@ public class BaseService {
         Jws<Claims> jwsClaims = JWTHelper.decodeJWT(token);
         Claims claims = jwsClaims.getBody();
 
-        String userId = claims.getId();
-        return userId;
+        return claims.getId();
     }
 
 }

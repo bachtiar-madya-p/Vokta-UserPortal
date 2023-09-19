@@ -1,12 +1,8 @@
 package id.ic.vokta.rest.service;
 
-import id.ic.vokta.controller.MicrocontrollerController;
 import id.ic.vokta.controller.WaterTankController;
-import id.ic.vokta.controller.model.MicrocontrollerSchema;
-import id.ic.vokta.model.Microcontroller;
 import id.ic.vokta.model.WaterTankBrand;
 import id.ic.vokta.model.WaterTankDetail;
-import id.ic.vokta.rest.model.MicrocontrollerResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
