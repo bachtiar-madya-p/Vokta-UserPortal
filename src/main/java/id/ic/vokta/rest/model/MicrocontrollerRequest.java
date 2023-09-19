@@ -1,34 +1,39 @@
-package id.ic.vokta.model;
+package id.ic.vokta.rest.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import id.ic.vokta.model.Microcontroller;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Microcontroller {
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+public class MicrocontrollerRequest {
 
     @JsonProperty("uid")
     private String uid;
+
     @JsonProperty("sensorId")
     private String sensorId;
+
     @JsonProperty("sensorName")
     private String sensorName;
+
     @JsonProperty("tankBrand")
     private String tankBrand;
+
     @JsonProperty("tankType")
     private String tankType;
+
     @JsonProperty("capacity")
     private String capacity;
+
     @JsonProperty("diameter")
     private String diameter;
+
     @JsonProperty("height")
     private String height;
-    @JsonProperty("modifyDt")
-    private String modifyDt;
-    @JsonProperty("createDt")
-    private String createDt;
 
-    public Microcontroller() {
-        //Empty Constructor
+    public MicrocontrollerRequest() {
+        //Empty constructor
     }
 
     public String getUid() {
@@ -93,21 +98,5 @@ public class Microcontroller {
 
     public void setHeight(String height) {
         this.height = height;
-    }
-
-    public String getModifyDt() {
-        return modifyDt;
-    }
-
-    public void setModifyDt(String modifyDt) {
-        this.modifyDt = modifyDt;
-    }
-
-    public String getCreateDt() {
-        return createDt;
-    }
-
-    public void setCreateDt(String createDt) {
-        this.createDt = createDt;
     }
 }
