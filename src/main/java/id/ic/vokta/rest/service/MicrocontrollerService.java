@@ -97,7 +97,7 @@ public class MicrocontrollerService extends BaseService {
         Microcontroller microcontroller = microcontrollerController.getMinimalSensorInformation(uid);
         log.debug(methodName, JsonHelper.toJson(microcontroller));
         MicrocontrollerEvent currentEvent = eventController.getCurrentStatus(microcontroller.getSensorId());
-        if(currentEvent.getUid() != null) {
+        if(currentEvent.getCreateDt() != null) {
             log.debug(methodName, JsonHelper.toJson(currentEvent));
             MicrocontrollerEvent currentEventResponse = new MicrocontrollerEvent();
             currentEventResponse.setLatitude(currentEvent.getLatitude());
