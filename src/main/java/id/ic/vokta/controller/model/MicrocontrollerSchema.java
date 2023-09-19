@@ -7,6 +7,7 @@ public class MicrocontrollerSchema {
     private String createDt;
 
     public MicrocontrollerSchema() {
+        //Empty Constructor
     }
 
     public String getUid() {

@@ -43,7 +43,6 @@ public class MicrocontrollerService extends BaseService {
         start(methodName);
         log.debug(methodName, "GET /microcontrollers");
 
-        Response response = buildSuccessResponse();
         String userId = extractUid(authorizationHeader);
 
         List<MicrocontrollerSchema> schemaList = schemaController.getMicrocontrollerSchema(userId);
@@ -58,7 +57,7 @@ public class MicrocontrollerService extends BaseService {
             microcontrollerResponse.setMicrocontrollers(microcontrollers);
         }
 
-        response = buildSuccessResponse(microcontrollerResponse);
+        Response response = buildSuccessResponse(microcontrollerResponse);
 
         completed(methodName);
         return response;
@@ -71,14 +70,11 @@ public class MicrocontrollerService extends BaseService {
         start(methodName);
         log.debug(methodName, "GET /microcontrollers/" + uid);
 
-        Response response = buildSuccessResponse();
-        String userId = extractUid(authorizationHeader);
-
         MicrocontrollerDetailResponse detailResponse = new MicrocontrollerDetailResponse();
         Microcontroller microcontroller = microcontrollerController.getMicrocontrollerInformation(uid);
         detailResponse.setMicrocontroller(microcontroller);
 
-        response = buildSuccessResponse(detailResponse);
+        Response response = buildSuccessResponse(detailResponse);
 
         completed(methodName);
         return response;
@@ -90,9 +86,6 @@ public class MicrocontrollerService extends BaseService {
         final String methodName = "getMicrocontrollerDetails";
         start(methodName);
         log.debug(methodName, "GET /microcontrollers/events/" + uid);
-
-        Response response = buildSuccessResponse();
-        String userId = extractUid(authorizationHeader);
 
         Microcontroller microcontroller = microcontrollerController.getMinimalMicrocontrollerInformation(uid);
         MicrocontrollerEvent currentEvent = eventController.getCurrentStatus(microcontroller.getDeviceId());
@@ -115,7 +108,7 @@ public class MicrocontrollerService extends BaseService {
         eventsResponse.setDeviceId(microcontroller.getDeviceId());
         eventsResponse.setDeviceName(microcontroller.getDeviceName());
         eventsResponse.setEvent(currentEvent);
-        response = buildSuccessResponse(eventsResponse);
+        Response response = buildSuccessResponse(eventsResponse);
 
         completed(methodName);
         return response;

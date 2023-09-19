@@ -28,6 +28,7 @@ public class Microcontroller {
     private String createDt;
 
     public Microcontroller() {
+        //Empty Constructor
     }
 
     public String getUid() {

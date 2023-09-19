@@ -108,7 +108,7 @@ public class OnBoardService extends BaseService {
         log.debug(methodName, "GET /onboard/login-complete");
         // Clear old sessions
         if (getSession() != null) {
-            //getSession().invalidate();
+
         }
         completed(methodName);
         return buildSuccessResponse();

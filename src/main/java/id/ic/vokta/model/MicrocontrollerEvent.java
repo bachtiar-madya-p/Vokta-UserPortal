@@ -26,6 +26,7 @@ public class MicrocontrollerEvent {
     private String createDt;
 
     public MicrocontrollerEvent() {
+        //Empty Constructor
     }
 
     public String getUid() {

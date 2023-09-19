@@ -59,7 +59,6 @@ public class UserController extends BaseController {
 
     public String getUserUid(String email) {
         final String methodName = "getUserUid";
-        //start(methodName);
 
         String result = "";
 
@@ -76,7 +75,7 @@ public class UserController extends BaseController {
                 log.debug(methodName, "User not found!");
             }
         }
-        //completed(methodName);
+
         return result;
     }
 

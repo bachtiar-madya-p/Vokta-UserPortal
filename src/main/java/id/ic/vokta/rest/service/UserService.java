@@ -34,12 +34,11 @@ public class UserService extends BaseService {
         final String methodName = "retrieveUser";
         start(methodName);
         log.debug(methodName, "GET /users");
-        Response response = buildBadRequestResponse();
-        String userId = extractUid(authorizationHeader);
 
+        String userId = extractUid(authorizationHeader);
         User user = userController.getUserInformation(userId);
 
-        response = buildSuccessResponse(user);
+        Response response = buildSuccessResponse(user);
 
         completed(methodName);
         return response;

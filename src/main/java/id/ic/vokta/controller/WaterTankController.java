@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 public class WaterTankController extends BaseController {
 
+    public static final String TANK_NOT_FOUND = "Tank not found!";
     public WaterTankController() {
         log = getLogger(this.getClass());
     }
@@ -30,7 +31,7 @@ public class WaterTankController extends BaseController {
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
             if (ex.getMessage().contains(Constant.ERROR_EXPECTED_ONE_ELEMENT)) {
-                log.debug(methodName, "Tank not found!");
+                log.debug(methodName, TANK_NOT_FOUND);
             }
         }
         completed(methodName);
@@ -56,7 +57,7 @@ public class WaterTankController extends BaseController {
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
             if (ex.getMessage().contains(Constant.ERROR_EXPECTED_ONE_ELEMENT)) {
-                log.debug(methodName, "Tank not found!");
+                log.debug(methodName, TANK_NOT_FOUND);
             }
         }
         completed(methodName);
@@ -78,7 +79,7 @@ public class WaterTankController extends BaseController {
         } catch (Exception ex) {
             log.error(methodName, ex.getMessage());
             if (ex.getMessage().contains(Constant.ERROR_EXPECTED_ONE_ELEMENT)) {
-                log.debug(methodName, "Tank not found!");
+                log.debug(methodName, TANK_NOT_FOUND);
             }
         }
         completed(methodName);
