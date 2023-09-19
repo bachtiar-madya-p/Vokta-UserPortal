@@ -15,16 +15,16 @@ public class MicrocontrollerEventController extends BaseController {
         log = getLogger(this.getClass());
     }
 
-    public MicrocontrollerEvent getCurrentStatus(String deviceId) {
+    public MicrocontrollerEvent getCurrentStatus(String sensorId) {
         final String methodName = "getCurrentStatus";
         start(methodName);
 
         MicrocontrollerEvent event = new MicrocontrollerEvent();
 
-        String sql = "SELECT uid, deviceId, latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE deviceId = :deviceId ORDER BY createDt ASC;";
+        String sql = "SELECT  latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId ORDER BY createDt DESC LIMIT 1;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
-            q.bind("deviceId", deviceId);
+            q.bind("sensorId", sensorId);
             event = q.mapToBean(MicrocontrollerEvent.class).one();
 
         } catch (Exception ex) {
@@ -37,16 +37,16 @@ public class MicrocontrollerEventController extends BaseController {
         return event;
     }
 
-    public List<MicrocontrollerEvent> getDailyEvents(String deviceId, String startDate, String endDate) {
+    public List<MicrocontrollerEvent> getDailyEvents(String sensorId, String startDate, String endDate) {
         final String methodName = "getDailyEvents";
         start(methodName);
 
         List<MicrocontrollerEvent> events = new ArrayList<>();
 
-        String sql = "SELECT uid, deviceId, latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE deviceId = :deviceId AND createDt >= :startDate AND createDt < :endDate ORDER BY createDt ASC;";
+        String sql = "SELECT uid, sensorId, latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId AND createDt >= :startDate AND createDt < :endDate ORDER BY createDt ASC;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
-            q.bind("deviceId", deviceId);
+            q.bind("sensorId", sensorId);
             q.bind("startDate", startDate);
             q.bind("endDate", endDate);
             events = q.mapToBean(MicrocontrollerEvent.class).list();

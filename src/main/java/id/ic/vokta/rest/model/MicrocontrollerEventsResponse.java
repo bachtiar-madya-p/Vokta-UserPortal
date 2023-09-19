@@ -1,18 +1,22 @@
 package id.ic.vokta.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import id.ic.vokta.model.MicrocontrollerEvent;
 
 import javax.ws.rs.core.Response;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MicrocontrollerEventsResponse extends ServiceResponse{
 
     @JsonProperty("uid")
     private String uid;
-    @JsonProperty("deviceId")
-    private String deviceId;
-    @JsonProperty("deviceName")
-    private String deviceName;
+    @JsonProperty("sensorId")
+    private String sensorId;
+    @JsonProperty("sensorName")
+    private String sensorName;
+    @JsonProperty("capacity")
+    private String capacity;
 
     @JsonProperty("events")
     private MicrocontrollerEvent event;
@@ -37,19 +41,27 @@ public class MicrocontrollerEventsResponse extends ServiceResponse{
         this.uid = uid;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getSensorId() {
+        return sensorId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
     }
 
-    public String getDeviceName() {
-        return deviceName;
+    public String getSensorName() {
+        return sensorName;
     }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setSensorName(String sensorName) {
+        this.sensorName = sensorName;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 }

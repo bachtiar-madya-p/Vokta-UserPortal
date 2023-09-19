@@ -2,8 +2,8 @@ package id.ic.vokta.controller.model;
 
 public class MicrocontrollerSchema {
     private String uid;
-    private String userId;
-    private String microcontrollerId;
+    private String userUid;
+    private String sensorUid;
     private String createDt;
 
     public MicrocontrollerSchema() {
@@ -18,20 +18,20 @@ public class MicrocontrollerSchema {
         this.uid = uid;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserUid() {
+        return userUid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 
-    public String getMicrocontrollerId() {
-        return microcontrollerId;
+    public String getSensorUid() {
+        return sensorUid;
     }
 
-    public void setMicrocontrollerId(String microcontrollerId) {
-        this.microcontrollerId = microcontrollerId;
+    public void setSensorUid(String sensorUid) {
+        this.sensorUid = sensorUid;
     }
 
     public String getCreateDt() {

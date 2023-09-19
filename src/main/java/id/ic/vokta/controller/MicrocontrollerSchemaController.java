@@ -4,6 +4,7 @@ import id.ic.vokta.controller.model.MicrocontrollerSchema;
 import id.ic.vokta.util.property.Constant;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.statement.Query;
+import org.jdbi.v3.core.statement.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,10 @@ public class MicrocontrollerSchemaController extends BaseController {
 
         List<MicrocontrollerSchema> result = new ArrayList<>();
 
-        String sql = "SELECT uid, userId, microcontrollerId, createDt FROM users_microcontroller_schema WHERE userId = :userId;";
+        String sql = "SELECT uid, userUid, sensorUid, createDt FROM users_microcontroller_schema WHERE userUid = :userUid;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
-            q.bind("userId", userId);
+            q.bind("userUid", userId);
             result = q.mapToBean(MicrocontrollerSchema.class).list();
 
         } catch (Exception ex) {
@@ -32,6 +33,27 @@ public class MicrocontrollerSchemaController extends BaseController {
                 log.debug(methodName, "Microcontroller schema not found!");
             }
         }
+        return result;
+    }
+
+    public boolean createSensorSchema(MicrocontrollerSchema schema) {
+        final String methodName = "createSensorSchema";
+        start(methodName);
+
+        boolean result = false;
+
+        String sql = "INSERT INTO `users_microcontroller_schema` (`uid`, `userUid`, `sensorUid`) " +
+                "VALUES (:uid, :userUid, :sensorUid);";
+
+        try (Handle h = getHandle(); Update update = h.createUpdate(sql)) {
+            update.bindBean(schema);
+            result = executeUpdate(update);
+            log.debug(methodName, "Result: " + result);
+
+        } catch (Exception ex) {
+            log.error(methodName, ex.getMessage());
+        }
+        completed(methodName);
         return result;
     }
 }

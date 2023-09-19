@@ -16,6 +16,10 @@ public class MicrocontrollerEvent {
     private String longitude;
     @JsonProperty("level")
     private String level;
+    @JsonProperty("levelInLiters")
+    private String levelInLiters;
+    @JsonProperty("levelInPercents")
+    private String levelInPercents;
     @JsonProperty("ph")
     private String ph;
     @JsonProperty("turbidity")
@@ -67,6 +71,22 @@ public class MicrocontrollerEvent {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getLevelInLiters() {
+        return levelInLiters;
+    }
+
+    public void setLevelInLiters(String levelInLiters) {
+        this.levelInLiters = levelInLiters;
+    }
+
+    public String getLevelInPercents() {
+        return levelInPercents;
+    }
+
+    public void setLevelInPercents(String levelInPercents) {
+        this.levelInPercents = levelInPercents;
     }
 
     public String getPh() {
