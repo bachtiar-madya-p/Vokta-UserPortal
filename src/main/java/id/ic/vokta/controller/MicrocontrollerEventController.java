@@ -19,12 +19,13 @@ public class MicrocontrollerEventController extends BaseController {
         final String methodName = "getCurrentStatus";
         start(methodName);
 
-        MicrocontrollerEvent event = new MicrocontrollerEvent();
+        MicrocontrollerEvent event = null;
 
-        String sql = "SELECT  latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId ORDER BY createDt DESC LIMIT 1;";
+        String sql = "SELECT latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId ORDER BY createDt DESC LIMIT 1;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
             q.bind("sensorId", sensorId);
+            event = new MicrocontrollerEvent();
             event = q.mapToBean(MicrocontrollerEvent.class).one();
 
         } catch (Exception ex) {
