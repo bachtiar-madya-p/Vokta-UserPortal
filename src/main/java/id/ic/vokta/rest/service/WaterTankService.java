@@ -46,11 +46,7 @@ public class WaterTankService extends BaseService{
         log.debug(methodName, "GET /tank/type?brandUid=" + brandUid + "&filter=" + filter);
 
         List<WaterTankDetail> tankType = waterTankController.getWaterTankType(brandUid, filter);
-        for(WaterTankDetail detail : tankType){
-            detail.setCapacity(detail.getCapacity() + " L");
-            detail.setDiameter(detail.getDiameter() + " cm");
-            detail.setHeight(detail.getHeight() + " cm");
-        }
+
         Response response = buildSuccessResponse(tankType);
 
         completed(methodName);
