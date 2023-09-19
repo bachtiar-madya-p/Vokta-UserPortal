@@ -41,6 +41,8 @@ public class ApplicationFilter implements Filter {
 
         unprotectedList.add("/rest/onboard/login-start");
         unprotectedList.add("/rest/auth");
+        unprotectedList.add("/rest/tank/brands");
+        unprotectedList.add("/rest/tank/type");
 
     }
 
