@@ -97,22 +97,25 @@ public class MicrocontrollerService extends BaseService {
         Microcontroller microcontroller = microcontrollerController.getMinimalSensorInformation(uid);
         log.debug(methodName, JsonHelper.toJson(microcontroller));
         MicrocontrollerEvent currentEvent = eventController.getCurrentStatus(microcontroller.getSensorId());
+        if(currentEvent.getUid() != null) {
+            log.debug(methodName, JsonHelper.toJson(currentEvent));
+            MicrocontrollerEvent currentEventResponse = new MicrocontrollerEvent();
+            currentEventResponse.setLatitude(currentEvent.getLatitude());
+            currentEventResponse.setLongitude(currentEvent.getLongitude());
+            currentEventResponse.setPh(currentEvent.getPh());
+            currentEventResponse.setTurbidity(currentEvent.getTurbidity());
+            currentEventResponse.setTds(currentEvent.getTds());
 
-        MicrocontrollerEvent currentEventResponse = new MicrocontrollerEvent();
-        currentEventResponse.setLatitude(currentEvent.getLatitude());
-        currentEventResponse.setLongitude(currentEvent.getLongitude());
-        currentEventResponse.setPh(currentEvent.getPh());
-        currentEventResponse.setTurbidity(currentEvent.getTurbidity());
-        currentEventResponse.setTds(currentEvent.getTds());
+            Double maxCapacity = Double.parseDouble(microcontroller.getCapacity());
+            Double filledLevel = Double.parseDouble(currentEvent.getLevel()) / 100;
+            double currentCapacity = maxCapacity * filledLevel;
 
-        Double maxCapacity = Double.parseDouble(microcontroller.getCapacity());
-        Double filledLevel = Double.parseDouble(currentEvent.getLevel()) / 100;
-        double currentCapacity = maxCapacity * filledLevel;
+            currentEvent.setLevelInLiters(String.valueOf(currentCapacity));
+            currentEvent.setLevelInPercents(currentEvent.getLevel());
+            //remove redundant values
+            currentEvent.setLevel(null);
+        }
 
-        currentEvent.setLevelInLiters(String.valueOf(currentCapacity));
-        currentEvent.setLevelInPercents(currentEvent.getLevel());
-        //remove redundant values
-        currentEvent.setLevel(null);
 
         MicrocontrollerEventsResponse eventsResponse = new MicrocontrollerEventsResponse();
         eventsResponse.setUid(microcontroller.getUid());
