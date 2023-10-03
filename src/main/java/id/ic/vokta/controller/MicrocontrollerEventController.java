@@ -21,7 +21,7 @@ public class MicrocontrollerEventController extends BaseController {
 
         MicrocontrollerEvent event = null;
 
-        String sql = "SELECT latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId ORDER BY createDt DESC LIMIT 1;";
+        String sql = "SELECT latitude, longitude, `level`, temperature, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId ORDER BY createDt DESC LIMIT 1;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
             q.bind("sensorId", sensorId);
@@ -44,7 +44,7 @@ public class MicrocontrollerEventController extends BaseController {
 
         List<MicrocontrollerEvent> events = new ArrayList<>();
 
-        String sql = "SELECT uid, sensorId, latitude, longitude, `level`, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId AND createDt >= :startDate AND createDt < :endDate ORDER BY createDt ASC;";
+        String sql = "SELECT uid, sensorId, latitude, longitude, `level`, temperature, ph, turbidity, tds, createDt FROM microcontroller_event WHERE sensorId = :sensorId AND createDt >= :startDate AND createDt < :endDate ORDER BY createDt ASC;";
 
         try (Handle h = getHandle(); Query q = h.createQuery(sql)) {
             q.bind("sensorId", sensorId);

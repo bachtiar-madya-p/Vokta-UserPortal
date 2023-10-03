@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE log4j:configuration PUBLIC
-        "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
 
 <Configuration status="INFO" name="config">
     <Properties>
@@ -11,8 +9,10 @@
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN}" />
         </Console>
-        <RollingFile name="rollingFile" fileName="${LOG_DIR}/vokta-users.log"
-                     filePattern="${LOG_DIR}/vokta-users.%d{dd-MMM}.log.gz" ignoreExceptions="false">
+        <RollingFile name="rollingFile"
+                     fileName="${LOG_DIR}/vokta-users.log"
+                     filePattern="${LOG_DIR}/vokta-users.%d{yyyy-MM-dd}.log.gz"
+                     ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>${PATTERN}</Pattern>
             </PatternLayout>
@@ -25,13 +25,12 @@
     </Appenders>
     <Loggers>
         <Root level="error">
-            <AppenderRef ref="rollingFile" />
+            <AppenderRef ref="STDOUT" />
         </Root>
 
         <Logger name="id" level="debug" additivity="false">
             <AppenderRef ref="rollingFile" />
         </Logger>
-
         <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="rollingFile" />
         </Logger>
