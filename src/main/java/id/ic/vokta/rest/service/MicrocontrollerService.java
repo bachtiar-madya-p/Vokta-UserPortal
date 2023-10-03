@@ -105,6 +105,7 @@ public class MicrocontrollerService extends BaseService {
             currentEventResponse.setPh(currentEvent.getPh());
             currentEventResponse.setTurbidity(currentEvent.getTurbidity());
             currentEventResponse.setTds(currentEvent.getTds());
+            currentEventResponse.setTemperature(currentEvent.getTemperature());
 
             Double maxCapacity = Double.parseDouble(microcontroller.getCapacity());
             Double filledLevel = Double.parseDouble(currentEvent.getLevel()) / 100;

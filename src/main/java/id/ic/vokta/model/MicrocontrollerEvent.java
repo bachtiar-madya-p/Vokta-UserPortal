@@ -14,6 +14,8 @@ public class MicrocontrollerEvent {
     private String latitude;
     @JsonProperty("longitude")
     private String longitude;
+    @JsonProperty("temperature")
+    private String temperature;
     @JsonProperty("level")
     private String level;
     @JsonProperty("levelInLiters")
@@ -63,6 +65,14 @@ public class MicrocontrollerEvent {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 
     public String getLevel() {
